@@ -7,6 +7,7 @@ const Layout = () => {
         <Link to="/" id="title"><h1>PhyoID</h1></Link>
         <nav>
           <Link to="/login">Log in</Link>
+          <Link to="/register">Register</Link>
         </nav>
       </header>
       <div className="spacer"></div>
