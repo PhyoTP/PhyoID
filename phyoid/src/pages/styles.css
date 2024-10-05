@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'AvenirMedium';
+    src: url('AvenirNextRoundedStd-Med.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'AvenirBold';
+    src: url('AvenirNextRoundedStd-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+html{
+    background-color: #212121;
+    font-family: AvenirMedium;
+    color: #fff;
+}
+header{
+    position: absolute; /* Position the element absolutely */
+    left: 0;            
+    right: 0; 
+    top: 0;          
+    background-color: #ffffff;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+}
+header #title{
+    margin-left: 2rem;
+    text-decoration: none;
+}
+.spacer{
+    height: 15vh;
+}
+header h1{
+    font-family: AvenirBold;
+    color: navy;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+}
+nav {
+    gap: 1rem;
+    padding: 1rem;
+}
