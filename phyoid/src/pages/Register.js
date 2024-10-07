@@ -1,13 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Register = () => {
+  const { app } = useParams();
+  function redirect() {
+    if (app === "multicards") {
+      window.location.href = "https://multicards.phyotp.dev";
+    }
+  }
+  function register() {
+    redirect();
+  }
   return (
     <div className="container">
     <StyledWrapper>
       <div className="container">
-        <div className="card">
+        <form className="card" onSubmit={register}>
           <p className="register">Register</p>
           <div className="inputBox">
             <input required type="text" />
@@ -19,9 +28,9 @@ const Register = () => {
             <span>Password</span>
           </div>
 
-          <button className="enter">Enter</button>
-          <Link to="/login" className="login">Log in Here</Link>
-        </div>
+          <input type="submit" className="enter" />
+          <Link to={"/login" + (app ? "/" + app : "")} className="login">Log in Here</Link>
+        </form>
       </div>
     </StyledWrapper>
     </div>
