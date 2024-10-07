@@ -4,14 +4,47 @@ import { Link, useParams } from "react-router-dom";
 
 const Login = () => {
   const { app } = useParams();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   function redirect() {
     if (app === "multicards") {
       window.location.href = "https://multicards.phyotp.dev";
     }
   }
-  function login() {
-    redirect();
+  function login(e) {
+    e.preventDefault();  // Prevent form from reloading the page
+
+    const user = {
+        username: username,
+        password: password
+    };
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    fetch("https://phyotp.pythonanywhere.com/api/phyoid/login", options)
+    .then(response => response.json())  // Parse the JSON response
+    .then(data => {
+        if (data.access_token) {  // Assuming the token is returned as 'token'
+            // Store the token as a cookie
+            document.cookie = `jwt=${data.access_token}; path=/; domain=.phyotp.dev; Secure; SameSite=None`;
+            // Now redirect based on the 'app' param
+            redirect();
+        } else {
+            // Handle error case (e.g. wrong credentials)
+            alert('Login failed. Please check your username and password.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
   }
+
   return (
     <div className="container">
     <StyledWrapper>
@@ -19,12 +52,12 @@ const Login = () => {
         <form className="card" onSubmit={login}>
           <p className="login">Log in</p>
           <div className="inputBox">
-            <input required type="text" />
+            <input required type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
             <span className="user">Username</span>
           </div>
 
           <div className="inputBox">
-            <input required type="password" />
+            <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <span>Password</span>
           </div>
 
