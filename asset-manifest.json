@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6ba9d07a.css",
+    "main.js": "/static/js/main.37043f4b.js",
+    "static/media/AvenirNextRoundedStd-Bold.woff2": "/static/media/AvenirNextRoundedStd-Bold.efac21793c94ba7ef71c.woff2",
+    "static/media/AvenirNextRoundedStd-Med.woff2": "/static/media/AvenirNextRoundedStd-Med.147fac13421f981d0b19.woff2",
+    "index.html": "/index.html",
+    "main.6ba9d07a.css.map": "/static/css/main.6ba9d07a.css.map",
+    "main.37043f4b.js.map": "/static/js/main.37043f4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6ba9d07a.css",
+    "static/js/main.37043f4b.js"
+  ]
+}
