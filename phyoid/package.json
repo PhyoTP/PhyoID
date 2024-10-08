@@ -1,4 +1,5 @@
 {
+  "homepage": "https://auth.phyotp.dev",
   "name": "phyoid",
   "version": "0.1.0",
   "private": true,
