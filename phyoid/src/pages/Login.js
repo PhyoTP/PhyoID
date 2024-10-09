@@ -46,7 +46,6 @@ const Login = () => {
   }
 
   return (
-    <div className="container">
     <StyledWrapper>
       <div className="container">
         <form className="card" onSubmit={login}>
@@ -66,7 +65,6 @@ const Login = () => {
         </form>
       </div>
     </StyledWrapper>
-    </div>
   );
 };
 

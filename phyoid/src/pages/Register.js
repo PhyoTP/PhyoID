@@ -50,7 +50,6 @@ const Register = () => {
   }
 
   return (
-    <div className="container">
     <StyledWrapper>
       <div className="container">
         <form className="card" onSubmit={register}>
@@ -70,7 +69,6 @@ const Register = () => {
         </form>
       </div>
     </StyledWrapper>
-    </div>
   );
 };
 

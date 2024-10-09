@@ -12,11 +12,11 @@
 }
 html{
     background-color: #212121;
-    font-family: AvenirMedium;
+    font-family: "Inter", AvenirMedium;
     color: #fff;
 }
 header{
-    position: absolute; /* Position the element absolutely */
+    position: fixed; 
     left: 0;            
     right: 0; 
     top: 0;          
@@ -25,28 +25,44 @@ header{
     display: flex;
     align-items: center;
 }
-header #title{
-    margin-left: 1rem;
+#title{
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 .spacer{
     height: 15vh;
 }
 header h1{
-    font-family: AvenirBold;
-    color: navy;
+    font-family: "Inter", AvenirBold;
+    color: #18206F;
+    margin-left: 1rem;
 }
 .container{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 80%;
+    height: 80vh;
 }
 header a {
     padding: 1rem;
     text-decoration: none;
 }
+a {
+    
+    color: #D4AF37;
+}
 main{
     text-align: center;
+}
+footer {
+    background-color: #000;
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    padding: 1rem;
+    gap: 2rem;
 }
