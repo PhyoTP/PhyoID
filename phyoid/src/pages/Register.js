@@ -12,7 +12,7 @@ const Register = () => {
         window.location.href = "https://multicards.phyotp.dev";
         break;
       default:
-        window.location.href = "https://phyotp.dev";
+        window.location.href = window.location.origin;
     }
   }
   function register(e) {
@@ -41,7 +41,7 @@ const Register = () => {
             redirect();
         } else {
             // Handle error case (e.g. wrong credentials)
-            alert('Registration failed. Please check your username and password.');
+            alert(JSON.stringify(data));
         }
     })
     .catch(error => {

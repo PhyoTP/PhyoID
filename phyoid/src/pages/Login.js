@@ -7,8 +7,12 @@ const Login = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   function redirect() {
-    if (app === "multicards") {
-      window.location.href = "https://multicards.phyotp.dev";
+    switch (app) {
+      case "multicards":
+        window.location.href = "https://multicards.phyotp.dev";
+        break;
+      default:
+        window.location.href = window.location.origin;
     }
   }
   function login(e) {
@@ -37,7 +41,7 @@ const Login = () => {
             redirect();
         } else {
             // Handle error case (e.g. wrong credentials)
-            alert('Login failed. Please check your username and password.');
+            alert(JSON.stringify(data));
         }
     })
     .catch(error => {
