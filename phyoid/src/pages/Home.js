@@ -1,12 +1,16 @@
+import React, { useState, useEffect } from 'react';
 import { ReactComponent as Logo } from './PhyoID.svg';
 
 const Home = () => {
+  const [user, setUser] = useState(null);   // State for storing the user data
+  const [error, setError] = useState(null); // State for storing any error messages
+
   // Function to get cookie value by name
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
+    for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) === ' ') {
         c = c.substring(1);
@@ -23,48 +27,62 @@ const Home = () => {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 
-  // If a cookie exists
-  if (document.cookie) {
-    let user;
+  useEffect(() => {
+    // Only fetch user data if cookie exists
+    if (document.cookie) {
+      const jwt = getCookie('jwt');
 
-    // If 'jwt' cookie doesn't exist or is empty
-    if (getCookie('jwt') === '') {
-      return (<h1>An error occurred</h1>);
-    } else {
-      const options = {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + getCookie('jwt')
-        }
-      }
-
-      // Fetch user data using the JWT token
-      return fetch("https://phyotp.pythonanywhere.com/api/phyoid/userdata", options)
-        .then(response => {
-          if (response.status === 422) {
-            // If 422 error, clear the cookie and return an error message
-            clearCookie('jwt');
-            return (<h1>Session expired. Please log in again.</h1>);
+      if (jwt === '') {
+        setError('An error occurred');
+      } else {
+        const options = {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + jwt
           }
-          return response.json();  // Parse the JSON response if successful
-        })
-        .then(data => {
-          user = data.username;
-          return (
-            <h1>hello {user}</h1>
-          );
-        })
+        };
+
+        // Fetch user data using the JWT token
+        fetch("https://phyotp.pythonanywhere.com/api/phyoid/userdata", options)
+          .then(response => {
+            if (response.status === 401) {
+              // If 422 error, clear the cookie and set an error message
+              clearCookie('jwt');
+              setError('Session expired. Please log in again.');
+            } else {
+              return response.json(); // Parse the JSON response if successful
+            }
+          })
+          .then(data => {
+            if (data) {
+              setUser(data.username); // Store username in state
+            }
+          })
+          .catch(() => {
+            setError('An error occurred while fetching user data.');
+          });
+      }
     }
-  } else {
-    // If no cookie exists, show the main page
-    return (
-      <main>
-        <Logo style={{ width: "50vmin", height: "50vmin" }} />
-        <h1>PhyoID</h1>
-        <p>A user management system made by <a href="phyotp.dev">PhyoTP</a></p>
-      </main>
-    );
+  }, []); // Empty dependency array to run the effect only once
+
+  // Error message rendering
+  if (error) {
+    return <h1>{error}</h1>;
   }
-}
+
+  // User greeting when data is fetched
+  if (user) {
+    return <h1>Hello, {user}</h1>;
+  }
+
+  // Main page when no user is logged in (no JWT cookie)
+  return (
+    <main>
+      <Logo style={{ width: "50vmin", height: "50vmin" }} />
+      <h1>PhyoID</h1>
+      <p>A user management system made by <a href="https://phyotp.dev">PhyoTP</a></p>
+    </main>
+  );
+};
 
 export default Home;

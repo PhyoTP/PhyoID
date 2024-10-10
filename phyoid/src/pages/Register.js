@@ -36,7 +36,7 @@ const Register = () => {
     .then(data => {
         if (data.access_token) {  // Assuming the token is returned as 'token'
             // Store the token as a cookie
-            document.cookie = `jwt=${data.access_token}; path=/; domain=.phyotp.dev; Secure; SameSite=None`;
+            document.cookie = `jwt=${data.access_token}; path=/; ${window.location.hostname === "auth.phyotp.dev" ? "domain=.phyotp.dev; SameSite=None; Secure;" : ""}`;
             // Now redirect based on the 'app' param
             redirect();
         } else {
@@ -102,7 +102,7 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   gap: 35px;
   background: #0e0e0e;
-  box-shadow: 0px 0px 64px #e8e8e8;
+  box-shadow: 0px 0px 64px #898989;
   border-radius: 16px;
 }
 
