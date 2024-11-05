@@ -31,7 +31,7 @@ const Register = () => {
         }
     }
 
-    fetch("https://phyotp.pythonanywhere.com/api/phyoid/register", options)
+    fetch("https://api.phyotp.dev/phyoid/register", options)
     .then(response => response.json())  // Parse the JSON response
     .then(data => {
         if (data.access_token) {  // Assuming the token is returned as 'token'

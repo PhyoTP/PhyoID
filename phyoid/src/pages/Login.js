@@ -31,7 +31,7 @@ const Login = () => {
         }
     }
 
-    fetch("https://phyotp.pythonanywhere.com/api/phyoid/login", options)
+    fetch("https://api.phyotp.dev/phyoid/login", options)
     .then(response => response.json())  // Parse the JSON response
     .then(data => {
         if (data.access_token) {  // Assuming the token is returned as 'token'

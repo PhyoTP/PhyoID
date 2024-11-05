@@ -43,7 +43,7 @@ const Home = () => {
         };
 
         // Fetch user data using the JWT token
-        fetch("https://phyotp.pythonanywhere.com/api/phyoid/userdata", options)
+        fetch("https://api.phyotp.dev/phyoid/userdata", options)
           .then(response => {
             if (response.status === 401) {
               // If 422 error, clear the cookie and set an error message
