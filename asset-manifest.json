@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.7c139fe6.css",
-    "main.js": "/static/js/main.d4634abb.js",
-    "static/media/AvenirNextRoundedStd-Bold.woff2": "/static/media/AvenirNextRoundedStd-Bold.efac21793c94ba7ef71c.woff2",
-    "static/media/AvenirNextRoundedStd-Med.woff2": "/static/media/AvenirNextRoundedStd-Med.147fac13421f981d0b19.woff2",
+    "main.css": "/static/css/main.71ce6e45.css",
+    "main.js": "/static/js/main.e6f6c664.js",
     "static/media/PhyoID.svg": "/static/media/PhyoID.62413bd7741a2476c3428ef725199bdf.svg",
     "index.html": "/index.html",
-    "main.7c139fe6.css.map": "/static/css/main.7c139fe6.css.map",
-    "main.d4634abb.js.map": "/static/js/main.d4634abb.js.map"
+    "main.71ce6e45.css.map": "/static/css/main.71ce6e45.css.map",
+    "main.e6f6c664.js.map": "/static/js/main.e6f6c664.js.map"
   },
   "entrypoints": [
-    "static/css/main.7c139fe6.css",
-    "static/js/main.d4634abb.js"
+    "static/css/main.71ce6e45.css",
+    "static/js/main.e6f6c664.js"
   ]
 }
