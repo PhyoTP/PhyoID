@@ -46,7 +46,7 @@ const Home = () => {
         fetch("https://api.phyotp.dev/phyoid/userdata", options)
           .then(response => {
             if (response.status === 401) {
-              // If 422 error, clear the cookie and set an error message
+              // If 401 error, clear the cookie and set an error message
               clearCookie('jwt');
               setError('Session expired. Please log in again.');
             } else {
@@ -55,7 +55,7 @@ const Home = () => {
           })
           .then(data => {
             if (data) {
-              setUser(data.username); // Store username in state
+              setUser(data); // Store username in state
             }
           })
           .catch(() => {
@@ -64,7 +64,28 @@ const Home = () => {
       }
     }
   }, []); // Empty dependency array to run the effect only once
+  const handleDownload = () => {
 
+    // Convert data to JSON string
+    const jsonData = JSON.stringify(user, null, 2);
+
+    // Create a Blob from the JSON string
+    const blob = new Blob([jsonData], { type: "application/json" });
+
+    // Create a URL for the Blob
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary <a> element
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "user_data.json"; // Set the file name
+
+    // Programmatically click the link to trigger the download
+    a.click();
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+  };
   // Error message rendering
   if (error) {
     return <h1>{error}</h1>;
@@ -72,9 +93,16 @@ const Home = () => {
 
   // User greeting when data is fetched
   if (user) {
-    return <h1>Hello, {user}</h1>;
+    return (
+      <main>
+        <h1>Hello, {user.username}</h1>
+        <section>
+          <button onClick={handleDownload} className="stuff">Download your data</button>
+        </section>
+      </main>
+    );
   }
-
+  
   // Main page when no user is logged in (no JWT cookie)
   return (
     <main>

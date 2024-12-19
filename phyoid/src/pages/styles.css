@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'AvenirMedium';
     src: url('AvenirNextRoundedStd-Med.woff2') format('woff2');
     font-weight: normal;
@@ -9,8 +9,8 @@
     src: url('AvenirNextRoundedStd-Bold.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-html{
+} */
+html, button{
     background-color: #212121;
     font-family: "Inter", AvenirMedium;
     color: #fff;
@@ -30,13 +30,18 @@ header{
     display: flex;
     align-items: center;
 }
-.spacer{
+#vertSpacer{
     height: 15vh;
 }
+
 header h1{
     font-family: "Inter", AvenirBold;
     color: #18206F;
     margin-left: 1rem;
+}
+.expand{ 
+    display: flex;
+    flex-grow: 1;
 }
 .container{
     display: flex;
@@ -45,13 +50,18 @@ header h1{
     width: 100%;
     height: 80vh;
 }
-header a {
+header a, button {
     padding: 1rem;
     text-decoration: none;
 }
-a {
-    
+a, button {
     color: #D4AF37;
+}
+button{
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 100%;
 }
 main{
     text-align: center;
@@ -65,4 +75,16 @@ footer {
     display: flex;
     padding: 1rem;
     gap: 2rem;
+}
+.stuff{
+    width: 10rem;
+    height: 10rem;
+    background-color: #18206F;
+    text-align: center;
+    border-radius: 1rem;
+    transition: all 1s;
+}
+.stuff:hover{
+    background-color: #D4AF37;
+    color:#18206F;
 }
