@@ -24,62 +24,65 @@ const Layout = () => {
     }
     return "";
   }
-  const deleteAccount = () => {
-    if (window.confirm("Are you sure you want to delete your account?")) {
-      const password = window.prompt("Enter password to continue:");
-      if (password != null) {
-        const jwt = getCookie('jwt'); 
+  const deleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to delete your account?")) return;
   
-        // Delete public data first
-        const publicDataOptions = {
-          method: 'DELETE',
-          headers: {
-            'Authorization': 'Bearer ' + jwt,
-          },
-        };
+    const password = window.prompt("Enter password to continue:");
+    if (!password) return;
   
-        fetch("https://api.phyotp.dev/multicards/user/delete", publicDataOptions)
-          .then((response) => {
-            if (!response.ok) {
-              console.error("Failed to delete public data.");
-              alert("An error occurred while trying to delete public data.");
-            }
-          })
-          .catch((error) => {
-            console.error("Fetch error:", error);
-            alert("Unable to delete public data. Please try again later.");
-          });
+    const jwt = getCookie('jwt');
+    if (jwt === "") {
+      alert("You are not logged in. Please log in and try again.");
+      return;
+    }
   
-        // Delete account after public data deletion
-        const accountData = { password };
-        const accountOptions = {
-          method: 'POST',
-          body: JSON.stringify(accountData),
-          headers: {
-            'Authorization': 'Bearer ' + jwt,
-            'Content-Type': 'application/json',
-          },
-        };
+    const deletePublicData = window.confirm("Would you like to delete your public data as well?");
+    try {
+      // Handle public data deletion or renaming
+      const publicDataEndpoint = deletePublicData 
+        ? "https://api.phyotp.dev/multicards/user/delete" 
+        : "https://api.phyotp.dev/multicards/user/sets_rename";
   
-        fetch("https://api.phyotp.dev/phyoid/delete", accountOptions)
-          .then(async (response) => {
-            if (response.ok) {
-              const message = await response.json(); // Parse JSON response
-              alert(message.message || "Account deleted successfully."); // Show success message
-              clearCookie('jwt'); // Clear the JWT cookie
-              window.location.reload(); // Reload the page
-            } else if (response.status === 401) {
-              alert("Password incorrect.");
-            } else {
-              const error = await response.json(); // Parse error response
-              alert(error.message || "An error occurred while deleting your account.");
-            }
-          })
-          .catch((error) => {
-            console.error("Fetch error:", error);
-            alert("Unable to delete account. Please try again later.");
-          });
+      const publicDataOptions = {
+        method: deletePublicData ? 'DELETE' : 'PUT',
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+        },
+      };
+  
+      const publicDataResponse = await fetch(publicDataEndpoint, publicDataOptions);
+      if (!publicDataResponse.ok) {
+        const error = await publicDataResponse.json();
+        console.error(error.message || "Public data operation failed.");
+        alert(error.message || "Unable to manage public data.");
+        return;
       }
+  
+      // Handle account deletion
+      const accountData = { password };
+      const accountOptions = {
+        method: 'POST',
+        body: JSON.stringify(accountData),
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+          'Content-Type': 'application/json',
+        },
+      };
+  
+      const accountResponse = await fetch("https://api.phyotp.dev/phyoid/delete", accountOptions);
+      if (accountResponse.ok) {
+        const message = await accountResponse.json();
+        alert(message.message || "Account deleted successfully.");
+        clearCookie('jwt'); // Log the user out
+      } else if (accountResponse.status === 401) {
+        alert("Password incorrect.");
+      } else {
+        const error = await accountResponse.json();
+        alert(error.message || "Unable to delete account.");
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred. Please try again later.");
     }
   };
   
