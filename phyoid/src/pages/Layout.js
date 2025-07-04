@@ -4,10 +4,17 @@ import { ReactComponent as Logo } from './PhyoID.svg';
 const Layout = () => {
   // Function to clear the cookie by setting its expiration date to the past
   function clearCookie(name) {
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.reload();  // Reload the page to reflect the change
-    console.log("logged out")
+    // If running on a subdomain, delete using domain attribute
+    if (window.location.hostname.endsWith(".phyotp.dev")) {
+      document.cookie = `${name}=; path=/; domain=.phyotp.dev; Secure; SameSite=None; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    } else {
+      document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    }
+
+    console.log("logged out");
+    window.location.reload();
   }
+
   // Function to get cookie value by name
   function getCookie(cname) {
     let name = cname + "=";
