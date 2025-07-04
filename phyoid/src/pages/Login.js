@@ -7,13 +7,7 @@ const Login = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   function redirect() {
-    switch (app) {
-      case "multicards":
-        window.location.href = "https://multicards.phyotp.dev";
-        break;
-      default:
-        window.location.href = window.location.origin;
-    }
+    window.location.href = app ? `https://${app}.phyotp.dev` : window.location.origin;
   }
   function login(e) {
     e.preventDefault();  // Prevent form from reloading the page
@@ -64,7 +58,7 @@ const Login = () => {
             <span>Password</span>
           </div>
 
-          <input type="submit" className="enter"/>
+          <input type="submit" className="enter" value="Log in"/>
           <Link to={"/register" + (app ? "/" + app : "")} className="register">Register Here</Link>
         </form>
       </div>
